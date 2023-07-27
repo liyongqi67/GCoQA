@@ -1,0 +1,267 @@
+description: GCoQA
+
+
+
+target:
+  service: amlk8s
+  name: itplabrr1cl1
+  # name: itpeusp40cl
+environment:
+  image: yongqili/gdpr-dgl:v5
+  setup:
+    - pip install datasets
+    - pip install sentencepiece
+
+# target:
+#   service: sing
+#   name: msrresrchvc
+# environment:
+#   image: wangliang/pytorch:1.7.1-transformers4.15-fix
+#   username: resrchvc4cr
+#   registry: resrchvc4cr.azurecr.io
+#   setup:
+#     - echo "export PATH=$PATH:$HOME/.local/bin" >> ~/.bashrc && source ~/.bashrc
+#     - pip install -r requirements.txt
+#     - pip install faiss
+#     - echo "setup done"
+
+data:
+  local_dir: /home/v-yongqili/project/GCoQA/data
+  remote_dir: data/GCoQA/data
+
+code:
+  local_dir: ./
+
+
+jobs:
+
+
+
+# - name: GCoQA2_topiocqa_document_testforreader
+#   sku: G8
+#   priority: High
+#   command:
+#     - export MKL_SERVICE_FORCE_INTEL=1
+#     - python3 -m torch.distributed.launch --nproc_per_node 8 train_query_encoder.py
+#       --do_train False
+#       --load_small False
+#       --fp16 False
+#       --num_train_epochs 40
+#       --per_gpu_train_batch_size 8
+#       --per_gpu_eval_batch_size 4
+#       --per_gpu_test_batch_size 2
+#       --overwrite_output_dir True
+#       --train_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_train.json
+#       --dev_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_dev.json
+#       --test_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_test.json
+#       --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+#       --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+#       --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+#       --output_dir $$AMLT_OUTPUT_DIR/release_test/
+#       --learning_rate 1e-5
+#       --prepend_answers True
+#       --model_type t5-large
+#       --top_k 5
+#       --beam_size 5
+#       --test_ckpt_path //amltb6dbd4c6ed2130b077b2c15ea456aea9/projects/GCoQA/amlt-results/7338574471.17930-95ac2da2-97cc-42c5-ba87-c05436cd84f6/release_test/checkpoint-22725model.pt
+
+# - name: GCoQA2_qrecc2_document_testforreader
+#   sku: G8
+#   priority: High
+#   command:
+#     - export MKL_SERVICE_FORCE_INTEL=1
+#     - python3 -m torch.distributed.launch --nproc_per_node 8 train_query_encoder.py
+#       --do_train False
+#       --load_small False
+#       --fp16 False
+#       --num_train_epochs 40
+#       --per_gpu_train_batch_size 8
+#       --per_gpu_eval_batch_size 4
+#       --per_gpu_test_batch_size 2
+#       --overwrite_output_dir True
+#       --train_file $$AMLT_DATA_DIR/QA_pairs/qrecc2/qrecc_train.json
+#       --dev_file $$AMLT_DATA_DIR/QA_pairs/qrecc2/qrecc_dev.json
+#       --test_file $$AMLT_DATA_DIR/QA_pairs/qrecc2/qrecc_test.json
+#       --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+#       --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+#       --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+#       --output_dir $$AMLT_OUTPUT_DIR/release_test/
+#       --learning_rate 1e-5
+#       --prepend_answers True
+#       --model_type t5-large
+#       --top_k 5
+#       --beam_size 5
+#       --test_ckpt_path //amltb6dbd4c6ed2130b077b2c15ea456aea9/projects/GCoQA/amlt-results/7338574471.17825-6f2b0032-8234-4b7f-95e4-379d551e2d37/release_test/checkpoint-6920model.pt
+
+# - name: GCoQA2_orquac2_document_testforreader
+#   sku: G8
+#   priority: High
+#   command:
+#     - export MKL_SERVICE_FORCE_INTEL=1
+#     - python3 -m torch.distributed.launch --nproc_per_node 8 train_query_encoder.py
+#       --do_train False
+#       --load_small False
+#       --fp16 False
+#       --num_train_epochs 40
+#       --per_gpu_train_batch_size 4
+#       --per_gpu_eval_batch_size 4
+#       --per_gpu_test_batch_size 2
+#       --overwrite_output_dir True
+#       --train_file $$AMLT_DATA_DIR/QA_pairs/orquac2/orquac_train.json
+#       --dev_file $$AMLT_DATA_DIR/QA_pairs/orquac2/orquac_dev.json
+#       --test_file $$AMLT_DATA_DIR/QA_pairs/orquac2/orquac_test.json
+#       --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+#       --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+#       --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+#       --output_dir $$AMLT_OUTPUT_DIR/release_test/
+#       --learning_rate 1e-5
+#       --prepend_answers False
+#       --model_type t5-large
+#       --top_k 5
+#       --beam_size 5
+#       --test_ckpt_path //amltb6dbd4c6ed2130b077b2c15ea456aea9/projects/GCoQA/amlt-results/7338574471.17721-eeaaebf9-3863-45ea-aabf-3c4b195225b9/release_test/checkpoint-20923model.pt
+
+
+
+
+- name: GCoQA2_topiocqa_document_testforbeam_size5
+  sku: G2
+  priority: High
+  command:
+    - export MKL_SERVICE_FORCE_INTEL=1
+    - python3 -m torch.distributed.launch --nproc_per_node 2 train_query_encoder.py
+      --do_train False
+      --load_small False
+      --fp16 False
+      --num_train_epochs 40
+      --per_gpu_train_batch_size 8
+      --per_gpu_eval_batch_size 4
+      --per_gpu_test_batch_size 2
+      --overwrite_output_dir True
+      --train_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_train.json
+      --dev_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_dev.json
+      --test_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_test.json
+      --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+      --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+      --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+      --output_dir $$AMLT_OUTPUT_DIR/release_test/
+      --learning_rate 1e-5
+      --prepend_answers True
+      --model_type t5-large
+      --top_k 5
+      --beam_size 5
+      --test_ckpt_path //amltb6dbd4c6ed2130b077b2c15ea456aea9/projects/GCoQA/amlt-results/7338574471.17930-95ac2da2-97cc-42c5-ba87-c05436cd84f6/release_test/checkpoint-22725model.pt
+- name: GCoQA2_topiocqa_document_testforbeam_size10
+  sku: G2
+  priority: High
+  command:
+    - export MKL_SERVICE_FORCE_INTEL=1
+    - python3 -m torch.distributed.launch --nproc_per_node 2 train_query_encoder.py
+      --do_train False
+      --load_small False
+      --fp16 False
+      --num_train_epochs 40
+      --per_gpu_train_batch_size 8
+      --per_gpu_eval_batch_size 4
+      --per_gpu_test_batch_size 2
+      --overwrite_output_dir True
+      --train_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_train.json
+      --dev_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_dev.json
+      --test_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_test.json
+      --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+      --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+      --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+      --output_dir $$AMLT_OUTPUT_DIR/release_test/
+      --learning_rate 1e-5
+      --prepend_answers True
+      --model_type t5-large
+      --top_k 10
+      --beam_size 10
+      --test_ckpt_path //amltb6dbd4c6ed2130b077b2c15ea456aea9/projects/GCoQA/amlt-results/7338574471.17930-95ac2da2-97cc-42c5-ba87-c05436cd84f6/release_test/checkpoint-22725model.pt
+
+- name: GCoQA2_topiocqa_document_testforbeam_size20
+  sku: G2
+  priority: High
+  command:
+    - export MKL_SERVICE_FORCE_INTEL=1
+    - python3 -m torch.distributed.launch --nproc_per_node 2 train_query_encoder.py
+      --do_train False
+      --load_small False
+      --fp16 False
+      --num_train_epochs 40
+      --per_gpu_train_batch_size 8
+      --per_gpu_eval_batch_size 4
+      --per_gpu_test_batch_size 2
+      --overwrite_output_dir True
+      --train_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_train.json
+      --dev_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_dev.json
+      --test_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_test.json
+      --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+      --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+      --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+      --output_dir $$AMLT_OUTPUT_DIR/release_test/
+      --learning_rate 1e-5
+      --prepend_answers True
+      --model_type t5-large
+      --top_k 20
+      --beam_size 20
+      --test_ckpt_path //amltb6dbd4c6ed2130b077b2c15ea456aea9/projects/GCoQA/amlt-results/7338574471.17930-95ac2da2-97cc-42c5-ba87-c05436cd84f6/release_test/checkpoint-22725model.pt
+
+
+- name: GCoQA2_topiocqa_document_testforbeam_size50
+  sku: G2
+  priority: High
+  command:
+    - export MKL_SERVICE_FORCE_INTEL=1
+    - python3 -m torch.distributed.launch --nproc_per_node 2 train_query_encoder.py
+      --do_train False
+      --load_small False
+      --fp16 False
+      --num_train_epochs 40
+      --per_gpu_train_batch_size 8
+      --per_gpu_eval_batch_size 4
+      --per_gpu_test_batch_size 2
+      --overwrite_output_dir True
+      --train_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_train.json
+      --dev_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_dev.json
+      --test_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_test.json
+      --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+      --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+      --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+      --output_dir $$AMLT_OUTPUT_DIR/release_test/
+      --learning_rate 1e-5
+      --prepend_answers True
+      --model_type t5-large
+      --top_k 50
+      --beam_size 50
+      --test_ckpt_path //amltb6dbd4c6ed2130b077b2c15ea456aea9/projects/GCoQA/amlt-results/7338574471.17930-95ac2da2-97cc-42c5-ba87-c05436cd84f6/release_test/checkpoint-22725model.pt
+
+# - name: GCoQA2_topiocqa_document_testforbeam_size100
+#   sku: G8
+#   priority: High
+#   command:
+#     - export MKL_SERVICE_FORCE_INTEL=1
+#     - python3 -m torch.distributed.launch --nproc_per_node 8 train_query_encoder.py
+#       --do_train False
+#       --load_small False
+#       --fp16 False
+#       --num_train_epochs 40
+#       --per_gpu_train_batch_size 8
+#       --per_gpu_eval_batch_size 4
+#       --per_gpu_test_batch_size 2
+#       --overwrite_output_dir True
+#       --train_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_train.json
+#       --dev_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_dev.json
+#       --test_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_test.json
+#       --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+#       --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+#       --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+#       --output_dir $$AMLT_OUTPUT_DIR/release_test/
+#       --learning_rate 1e-5
+#       --prepend_answers True
+#       --model_type t5-large
+#       --top_k 100
+#       --beam_size 100
+#       --test_ckpt_path //amltb6dbd4c6ed2130b077b2c15ea456aea9/projects/GCoQA/amlt-results/7338574471.17930-95ac2da2-97cc-42c5-ba87-c05436cd84f6/release_test/checkpoint-22725model.pt
+
+
