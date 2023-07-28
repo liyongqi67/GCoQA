@@ -54,13 +54,20 @@ Format:
     }
   }
 ```
-
-
+### 3. Trie. 
+To implement the constrained generation in the LLM, we process all the corpus and store it in the trie structure.  
+You could use the scripts passage-level/generate_trie_dict.py and document-level/generate_trie_dict.py to obtain the trie for passages and documents, respectively.  
+You could also download our processed trie files via this link.  
+```
+trie_dict_t5-base_section_level.pkl is for the passage_level.  
+trie_dict_t5-base_page_level.pkl is for the document_level.
+```
 
 ## Model training  
+### Passage_level
 The script for training on the TOPIOCQA dataset is 
 ```bash
-    - python3 -m torch.distributed.launch --nproc_per_node 8 train_query_encoder.py
+    - python3 -m torch.distributed.launch --nproc_per_node 8 passage-level/train_query_encoder.py
       --do_train True
       --load_small False
       --fp16 False
@@ -78,13 +85,134 @@ The script for training on the TOPIOCQA dataset is
       --output_dir $$AMLT_OUTPUT_DIR/release_test/
       --learning_rate 1e-5
       --prepend_answers True
-      --model_type t5-base
+      --model_type t5-large
       --top_k 5
       --beam_size 5
 ```
+The script for training on the QRECC dataset is 
+```bash
+    - python3 -m torch.distributed.launch --nproc_per_node 8 passage-level/train_query_encoder.py
+      --do_train True
+      --load_small False
+      --fp16 False
+      --num_train_epochs 40
+      --per_gpu_train_batch_size 8
+      --per_gpu_eval_batch_size 4
+      --per_gpu_test_batch_size 2
+      --overwrite_output_dir True
+      --train_file $$AMLT_DATA_DIR/QA_pairs/qrecc/qrecc_train.json
+      --dev_file $$AMLT_DATA_DIR/QA_pairs/qrecc/qrecc_dev.json
+      --test_file $$AMLT_DATA_DIR/QA_pairs/qrecc/qrecc_test.json
+      --corpus_path $$AMLT_DATA_DIR/full_wiki_segments.json
+      --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+      --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_section_level.pkl
+      --output_dir $$AMLT_OUTPUT_DIR/release_test/
+      --learning_rate 1e-5
+      --prepend_answers True
+      --model_type t5-large
+      --top_k 5
+      --beam_size 5
+```
+The script for training on the OR-QUAC dataset is 
+```bash
+    - python3 -m torch.distributed.launch --nproc_per_node 8 passage-level/train_query_encoder.py
+      --do_train True
+      --load_small False
+      --fp16 False
+      --num_train_epochs 40
+      --per_gpu_train_batch_size 8
+      --per_gpu_eval_batch_size 4
+      --per_gpu_test_batch_size 2
+      --overwrite_output_dir True
+      --train_file $$AMLT_DATA_DIR/QA_pairs/orquac/orquac_train.json
+      --dev_file $$AMLT_DATA_DIR/QA_pairs/orquac/orquac_dev.json
+      --test_file $$AMLT_DATA_DIR/QA_pairs/orquac/orquac_test.json
+      --corpus_path $$AMLT_DATA_DIR/full_wiki_segments.json
+      --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+      --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_section_level.pkl
+      --output_dir $$AMLT_OUTPUT_DIR/release_test/
+      --learning_rate 1e-5
+      --prepend_answers False
+      --model_type t5-large
+      --top_k 5
+      --beam_size 5
+``` 
+### Document_level
+The script for training on the TOPIOCQA dataset is 
+```bash
+    - python3 -m torch.distributed.launch --nproc_per_node 8 document-level/train_query_encoder.py
+      --do_train True
+      --load_small False
+      --fp16 False
+      --num_train_epochs 40
+      --per_gpu_train_batch_size 8
+      --per_gpu_eval_batch_size 4
+      --per_gpu_test_batch_size 2
+      --overwrite_output_dir True
+      --train_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_train.json
+      --dev_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_dev.json
+      --test_file $$AMLT_DATA_DIR/QA_pairs/topiocqa/topiocqa_test.json
+      --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+      --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+      --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+      --output_dir $$AMLT_OUTPUT_DIR/release_test/
+      --learning_rate 1e-5
+      --prepend_answers True
+      --model_type t5-large
+      --top_k 5
+      --beam_size 5
+```
+The script for training on the QRECC dataset is 
+```bash
+    - python3 -m torch.distributed.launch --nproc_per_node 8 document-level/train_query_encoder.py
+      --do_train True
+      --load_small False
+      --fp16 False
+      --num_train_epochs 40
+      --per_gpu_train_batch_size 8
+      --per_gpu_eval_batch_size 4
+      --per_gpu_test_batch_size 2
+      --overwrite_output_dir True
+      --train_file $$AMLT_DATA_DIR/QA_pairs/qrecc/qrecc_train.json
+      --dev_file $$AMLT_DATA_DIR/QA_pairs/qrecc/qrecc_dev.json
+      --test_file $$AMLT_DATA_DIR/QA_pairs/qrecc/qrecc_test.json
+      --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+      --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+      --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+      --output_dir $$AMLT_OUTPUT_DIR/release_test/
+      --learning_rate 1e-5
+      --prepend_answers True
+      --model_type t5-large
+      --top_k 5
+      --beam_size 5
+```
+The script for training on the OR-QUAC dataset is 
+```bash
+    - python3 -m torch.distributed.launch --nproc_per_node 8 document-level/train_query_encoder.py
+      --do_train True
+      --load_small False
+      --fp16 False
+      --num_train_epochs 40
+      --per_gpu_train_batch_size 8
+      --per_gpu_eval_batch_size 4
+      --per_gpu_test_batch_size 2
+      --overwrite_output_dir True
+      --train_file $$AMLT_DATA_DIR/QA_pairs/orquac/orquac_train.json
+      --dev_file $$AMLT_DATA_DIR/QA_pairs/orquac/orquac_dev.json
+      --test_file $$AMLT_DATA_DIR/QA_pairs/orquac/orquac_test.json
+      --corpus_path $$AMLT_DATA_DIR/full_wiki_document.json
+      --cache_dir $$AMLT_DATA_DIR/huggingface_cache/
+      --trie_dict $$AMLT_DATA_DIR/trie_dict_t5-base_page_level.pkl
+      --output_dir $$AMLT_OUTPUT_DIR/release_test/
+      --learning_rate 1e-5
+      --prepend_answers False
+      --model_type t5-large
+      --top_k 5
+      --beam_size 5
+``` 
 
 We trained the models on 8*32GB NVIDIA V100 GPUs. 
-We release our trained model checkpoints on the three datasets in this [link](https://drive.google.com/drive/folders/1_EMelqpyJXhGcyCp9WjV1JZwGWxnZjQw?usp=sharing).
+We release our trained model checkpoints on the three datasets in this [link]().
 
 
 ## Contact
