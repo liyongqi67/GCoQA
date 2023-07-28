@@ -57,11 +57,13 @@ Format:
 ### 3. Trie. 
 To implement the constrained generation in the LLM, we process all the corpus and store it in the trie structure.  
 You could use the scripts passage-level/generate_trie_dict.py and document-level/generate_trie_dict.py to obtain the trie for passages and documents, respectively.  
-You could also download our processed trie files via this link.  
+You could also download our processed trie files.  
 ```
 trie_dict_t5-base_section_level.pkl is for the passage_level.  
 trie_dict_t5-base_page_level.pkl is for the document_level.
 ```
+### 4. Download. 
+You could download the above files via this [link](https://drive.google.com/drive/folders/18Sa7QPO0r6j-OSVdoiobzAqcADIn4cfM?usp=sharing).
 
 ## Model training  
 ### Passage_level
@@ -212,7 +214,7 @@ The script for training on the OR-QUAC dataset is
 ``` 
 
 We trained the models on 8*32GB NVIDIA V100 GPUs. 
-We release our trained model checkpoints on the three datasets in this [link]().
+We release our trained model checkpoints on the three datasets in this [link](https://drive.google.com/drive/folders/19ea3tuIFJkUYiwZ8eGMOTaJ0xnmydSDS?usp=sharing).
 
 
 ## Contact
