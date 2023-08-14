@@ -1,9 +1,20 @@
 # GCoQA
 This is the official implementation for the paper "Generative Retrieval for Conversational Question Answering".  
-The preprint version is released in [Arxiv]().  
+The paper is released in [link](https://liyongqi67.github.io/papers/Generative%20Retrieval%20for%20Conversational%20Question%20Answering.pdf).  
 If you find our paper or code helpful,please consider citing as follows:
 ```bibtex
-
+@article{LI2023103475,
+title = {Generative retrieval for conversational question answering},
+journal = {Information Processing & Management},
+volume = {60},
+number = {5},
+pages = {103475},
+year = {2023},
+issn = {0306-4573},
+doi = {https://doi.org/10.1016/j.ipm.2023.103475},
+url = {https://www.sciencedirect.com/science/article/pii/S0306457323002121},
+author = {Yongqi Li and Nan Yang and Liang Wang and Furu Wei and Wenjie Li},
+}
 ```
 
 ## Dataset
