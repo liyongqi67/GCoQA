@@ -97,14 +97,12 @@ trie_dict_t5-base_page_level.pkl is for the document_level.
 ### 4. Download. 
 You could download the above files via this [link](https://drive.google.com/drive/folders/18Sa7QPO0r6j-OSVdoiobzAqcADIn4cfM?usp=sharing).
 ## Environment
-You could download the Docker image from the Docker Hub to access the exact environment for this project.
-"
-environment:
-  image: yongqili/gdpr-dgl:v5
-  setup:
-    - pip install datasets
-    - pip install sentencepiece
-"
+You could download the Docker image from the Docker Hub to access the exact environment for this project.  
+environment:  
+  image: yongqili/gdpr-dgl:v5  
+  setup:  
+    - pip install datasets  
+    - pip install sentencepiece  
 ## Model training  
 ### Passage_level
 The script for training on the TOPIOCQA dataset is 
